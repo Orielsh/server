@@ -1,4 +1,4 @@
-import app from "./app-simple";
+import {app} from "./app-simple";
 
 // Local development server
 const port = 3000;
