@@ -1,6 +1,5 @@
 import "dotenv/config";
 import express from "express";
-import cors from "cors";
 import helmet from "helmet";
 import { emailSchema } from "./validators.js";
 import { sendEmail } from "./mailer.js";
@@ -37,3 +36,5 @@ app.post("/send-email", sendEmailLimiter, async (req, res) => {
         res.status(500).json({ ok: false, error: e?.message ?? "Send failed" });
     }
 });
+
+export default app;
