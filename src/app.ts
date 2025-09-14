@@ -1,9 +1,6 @@
-import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
-import { emailSchema } from "./validators.js";
-import { sendEmail } from "./mailer.js";
-import { sendEmailLimiter } from "./rateLimit.js";
+
 
 export const app = express();
 
@@ -22,19 +19,5 @@ app.use((err: any, _req: any, res: any, _next: any) => {
 app.get("/health", (_, res) => res.json({ ok: true }));
 
 
-
-app.post("/send-email", sendEmailLimiter, async (req, res) => {
-    const parsed = emailSchema.safeParse(req.body);
-    if (!parsed.success) {
-        return res.status(400).json({ error: parsed.error.flatten() });
-    }
-    try {
-        await sendEmail(parsed.data);
-        res.json({ ok: true });
-    } catch (e: any) {
-        console.error("Send email error:", e);
-        res.status(500).json({ ok: false, error: e?.message ?? "Send failed" });
-    }
-});
 
 export default app;
