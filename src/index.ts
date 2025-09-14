@@ -1,11 +1,15 @@
-import app from "./app-simple";
+import express from 'express';
 
-// Only start server in local development
-if (process.env.NODE_ENV !== "production" && process.env.VERCEL !== "1") {
-    const port = 3000;
-    app.listen(port, () => {
-        console.log("Email server listening on", port);
-    });
-}
+// Initialize express
+const app = express();
 
-export default app;
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
