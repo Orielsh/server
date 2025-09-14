@@ -1,9 +1,11 @@
 import app from "./app-simple";
 
-// Local development server
-const port = 3000;
-app.listen(port, () => {
-    console.log("Email server listening on", port);
-});
+// Only start server in local development
+if (process.env.NODE_ENV !== "production" && process.env.VERCEL !== "1") {
+    const port = 3000;
+    app.listen(port, () => {
+        console.log("Email server listening on", port);
+    });
+}
 
-export default app; 
+export default app;
